@@ -2,7 +2,7 @@ import serial
 import time
 
 # Adjust your serial port and baud rate accordingly
-ser = serial.Serial('COM3', 9600)  
+ser = serial.Serial('COM8', 9600)  
 time.sleep(2)  # Wait for the serial connection to establish
 
 def send_data(data):

@@ -67,9 +67,9 @@ void loop() {
     Serial.print(", rotation=");
     Serial.println(rotation);
 
-    float W1 = -Vx + (1 / sqrt3) * Vy + R * rotation;
-    float W2 =  Vx + (1 / sqrt3) * Vy + R * rotation;
-    float W3 = -(2 / sqrt3) * Vy + R * rotation;
+    float W1 = Vx * (-0.67) +  Vy * 0 + 0.33 * rotation;
+    float W2 = Vx * (0.67/2) + Vy * (-0.57) + 0.33 * rotation;
+    float W3 = Vx * (0.67/2) + Vy * (0.57) + 0.33* rotation;
 
     setMotor(motor1_pwm, motor1_dir, W1);
     setMotor(motor2_pwm, motor2_dir, W2);
