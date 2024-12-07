@@ -7,13 +7,13 @@ JoystickController joystick(hid_parser);
 BluetoothController bluet(myusb, true, "0000");
 
 int motor1_pwm = 3;
-int motor1_dir = 4;
-int motor2_pwm = 5;
+int motor1_dir = 2;
+int motor2_pwm = 7;
 int motor2_dir = 6;
-int motor3_pwm = 9;
-int motor3_dir = 10;
+int motor3_pwm = 5;
+int motor3_dir = 4;
+int led=13;
 
-float R = 20;
 float sqrt3 = 1.73;
 
 void setMotor(int pwmPin, int dirPin, float speed) {
@@ -28,8 +28,7 @@ void setMotor(int pwmPin, int dirPin, float speed) {
 }
 
 void setup() {
-  Serial.begin(115200);
-  while (!Serial);
+  Serial.begin(96500);
   delay(1000);
 
   Serial.println("Initializing USB Host...");
@@ -42,6 +41,8 @@ void setup() {
   pinMode(motor2_dir, OUTPUT);
   pinMode(motor3_pwm, OUTPUT);
   pinMode(motor3_dir, OUTPUT);
+  pinMode(led,OUTPUT);
+  digitalWrite(led,HIGH);
 }
 
 void loop() {
@@ -55,9 +56,9 @@ void loop() {
     int rx = joystick.getAxis(2);
 
 
-    float Vx = map(lx, 0, 255, -100, 100);
-    float Vy = map(ly, 0, 255, -100, 100);
-    float rotation = map(rx, 0, 255, -100, 100);
+    float Vx = map(lx, 0, 255, 100, -100);
+    float Vy = map(ly, 0, 255, 100, -100);
+    float rotation = map(rx, 0, 255, 100, -100);
 
     //print values of the mapped values
     Serial.print("Mapped Values: Vx=");
@@ -74,16 +75,19 @@ void loop() {
     setMotor(motor1_pwm, motor1_dir, W1);
     setMotor(motor2_pwm, motor2_dir, W2);
     setMotor(motor3_pwm, motor3_dir, W3);
-
+    
+    float s1=map(W1,0,100,0,255);
+    float s2=map(W2,0,100,0,255);
+    float s3=map(W3,0,100,0,255);
 
 
     //print the values of each motor
     Serial.println("speed of Motor 1 :");
-    Serial.print(W1);
+    Serial.print(s1);
     Serial.println("speed of motor 2:");
-    Serial.print(W2);
+    Serial.print(s2);
     Serial.println("Speed of motor 3:");
-    Serial.print(W3);
+    Serial.print(s3);
   } 
   else {
     Serial.println("No controller detected...");
